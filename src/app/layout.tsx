@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import Footer from "@/components/Footer/Footer";
 
-const geistSans = Geist({
+// Loading custom fonts
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
-  subsets: ["latin"],
+  weight: "100 900",
 });
-
-const geistMono = Geist_Mono({
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: "100 900",
 });
 
 export const metadata: Metadata = {
@@ -24,10 +27,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {/* Main content container with padding and flex for responsiveness */}
+        <div className="min-h-screen flex flex-col">
+          <main className="flex-grow">
+            {/* Wrapping the children inside a responsive container */}
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              {children}
+            </div>
+          </main>
+
+          {/* Footer that is always at the bottom, responsive */}
+          <Footer />
+        </div>
       </body>
     </html>
   );
